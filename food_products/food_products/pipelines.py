@@ -13,6 +13,7 @@ import pdfplumber
 import re
 import uuid
 import pandas as pd
+import logging
 
 from scrapy.pipelines.files import FilesPipeline
 from scrapy.exceptions import DropItem
@@ -23,6 +24,9 @@ from io import StringIO
 from price_parser import Price
 from slugify import slugify
 from .utils.dates import get_date_range
+from .utils.database import get_engine
+
+logger = logging.getLogger(__name__)
 
 
 class BasicBasketsPdfDownloadPipeline(FilesPipeline):
@@ -176,15 +180,11 @@ class BasicBasketsPdfProcessingPipeline:
 
 class BasicBasketsPersistencePipeline:
     def process_item(self, item, spider):
-        dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table('food_products')
+        engine = get_engine()
 
         for file in item['file_outputs']:
             df = pd.read_csv(file)
-            deserialized = df.to_json(orient='records')
-            records = json.loads(deserialized, parse_float=Decimal)
-            with table.batch_writer() as batch:
-                for record in records:
-                    batch.put_item(
-                        Item=record
-                    )
+            df.to_sql('basic_baskets', con=engine,
+                      if_exists="append", index=False)
+
+            logger.debug('{}: saved to database'.format(file))
