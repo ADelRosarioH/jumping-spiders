@@ -23,7 +23,7 @@ from urllib.parse import urlparse
 from io import StringIO
 from price_parser import Price
 from slugify import slugify
-from .utils.dates import get_date_range
+from .utils.dates import get_date_range_form_url
 from .utils.database import get_engine
 
 logger = logging.getLogger(__name__)
@@ -94,7 +94,7 @@ class BasicBasketsPdfProcessingPipeline:
         if os.path.exists(file_output):
             return file_output
 
-        start_date, end_date = get_date_range(url)
+        start_date, end_date = get_date_range_form_url(url)
 
         pages = []
 

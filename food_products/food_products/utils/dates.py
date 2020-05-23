@@ -1,3 +1,4 @@
+import os
 import re
 import datetime
 from dateparser import parse
@@ -51,5 +52,6 @@ def _get_parsed_month(month):
     return parse(month, locales=['es-DO']).month
 
 
-def get_date_range(text):
-    return [get_from_date(text), get_to_date(text)]
+def get_date_range_form_url(url):
+    filename = os.path.basename(url)
+    return [get_from_date(filename), get_to_date(filename)]
