@@ -6,27 +6,12 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import os
 import scrapy
-import boto3
 import hashlib
 import mimetypes
-import pdfplumber
-import re
-import uuid
-import pandas as pd
-import logging
-
 from scrapy.pipelines.files import FilesPipeline
 from scrapy.exceptions import DropItem
-from scrapy.utils.project import get_project_settings
 from scrapy.utils.python import to_bytes
 from urllib.parse import urlparse
-from io import StringIO
-from price_parser import Price
-from slugify import slugify
-from .utils.dates import get_date_range_form_url
-from .utils.database import get_engine
-
-logger = logging.getLogger(__name__)
 
 
 class BasicBasketsPdfDownloadPipeline(FilesPipeline):
