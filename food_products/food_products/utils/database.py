@@ -1,28 +1,14 @@
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
 
-database_hostname = os.getenv('AWS_RDS_HOSTNAME')
-database_port = os.getenv('AWS_RDS_PORT')
-database_name = os.getenv('AWS_RDS_DB_NAME')
-database_username = os.getenv('AWS_RDS_USERNAME')
-database_password = os.getenv('AWS_RDS_PASSWORD')
 
-database_url = URL('postgresql',
-                   username=database_username,
-                   password=database_password,
-                   host=database_hostname,
-                   port=database_port,
-                   database=database_name)
-
-Engine = create_engine(database_url, echo=False)
-Session = sessionmaker(bind=Engine)
-
-
-def get_session():
+def get_session(connection_string):
+    engine = get_engine(connection_string)
+    Session = sessionmaker(bind=engine)
     return Session()
 
 
-def get_engine():
+def get_engine(connection_string):
+    Engine = create_engine(connection_string, echo=False)
     return Engine
