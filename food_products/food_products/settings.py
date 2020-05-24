@@ -64,11 +64,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'food_products.pipelines.BasicBasketsPdfsToS3Pipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'food_products.pipelines.BasicBasketsPipeline': 300
+# }
 
-FILES_STORE = 's3://jumping-spiders/food_products/basic_baskets/'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
