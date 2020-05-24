@@ -34,10 +34,3 @@ class BasicBasketsPdfToS3Pipeline(FilesPipeline):
         for file_url in item['file_urls']:
             yield scrapy.Request(file_url)
 
-    def item_completed(self, results, item, info):
-        print(results)
-        file_paths = [x['path'] for ok, x in results if ok]
-        if not file_paths:
-            raise DropItem("Item contains no files")
-        item['file_paths'] = file_paths
-        return item
