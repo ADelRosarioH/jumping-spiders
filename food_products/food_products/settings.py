@@ -67,7 +67,6 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     'food_products.pipelines.BasicBasketsPdfDownloadPipeline': 300,
     'food_products.pipelines.BasicBasketsPdfProcessingPipeline': 400,
-    'food_products.pipelines.BasicBasketsPersistencePipeline': 500,
 }
 
 FILES_STORE = 's3://jumping-spider/food_products/basic_baskets/'

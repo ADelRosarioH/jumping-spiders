@@ -176,15 +176,3 @@ class BasicBasketsPdfProcessingPipeline:
         pd.concat(pages).to_csv(file_output, index=False)
 
         return file_output
-
-
-class BasicBasketsPersistencePipeline:
-    def process_item(self, item, spider):
-        engine = get_engine()
-
-        for file in item['file_outputs']:
-            df = pd.read_csv(file)
-            df.to_sql('basic_baskets', con=engine,
-                      if_exists="append", index=False)
-
-            logger.debug('{}: saved to database'.format(file))
