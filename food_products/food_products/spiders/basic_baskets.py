@@ -9,7 +9,9 @@ from food_products.items import BasicBasketsItem
 class BasicBasketsSpider(CrawlSpider):
     name = 'basic_baskets'
     allowed_domains = ['']
-    start_urls = [os.getenv('START_URL')]
+    start_urls = [
+        'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2020/',
+    ]
 
     rules = (
         Rule(LinkExtractor(), callback='parse', follow=True),

@@ -68,7 +68,7 @@ ITEM_PIPELINES = {
     'food_products.pipelines.BasicBasketsPdfDownloadPipeline': 300,
 }
 
-FILES_STORE = 's3://jumping-spider/food_products/basic_baskets/'
+FILES_STORE = 's3://jumping-spiders/food_products/basic_baskets/'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
