@@ -11,4 +11,3 @@ import scrapy
 class BasicBasketsItem(scrapy.Item):
     file_urls = scrapy.Field()
     file_paths = scrapy.Field()
-    file_outputs = scrapy.Field()
