@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'food_products.pipelines.BasicBasketsPdfDownloadPipeline': 300,
+    'food_products.pipelines.BasicBasketsPdfToS3Pipeline': 300,
 }
 
 FILES_STORE = 's3://jumping-spiders/food_products/basic_baskets/'
