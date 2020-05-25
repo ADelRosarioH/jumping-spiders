@@ -9,7 +9,7 @@ import scrapy
 import hashlib
 import mimetypes
 from scrapy.pipelines.files import FilesPipeline
-from scrapy.exceptions import DropItem
+from scrapy.exceptions import DropItem, NotConfigured
 from scrapy.utils.python import to_bytes
 from urllib.parse import urlparse
 from food_products.utils.database import get_session
@@ -18,15 +18,20 @@ from food_products.utils.database import get_session
 class BasicBasketsAvoidPdfsDuplicatesPipeline:
 
     def process_item(self, item, spider):
-        connection_string = spider.connection_string
-        session = get_session(connection_string)
+        settings = spider.settings['DATABASE_SETTINGS']
+        session = get_session(**settings)
+
+        file_urls = []
 
         for file_url in item['file_urls']:
             file_hash = hashlib.sha1(to_bytes(file_url)).hexdigest()
             result = session.execute(
-                "SELECT 1 FROM basic_baskets_indexing WHERE file_hash = '{}' LIMIT 1".format(file_hash))
-            if result:
-                item['file_urls'].remove(file_url)
+                "SELECT 1 FROM basic_baskets_indexing WHERE file_hash = '{}' LIMIT 1".format(file_hash)).scalar()
+
+            if not result:
+                file_urls.append(file_url)
+
+        item['file_urls'] = file_urls
 
         return item
 
@@ -61,8 +66,8 @@ class BasicBasketsPdfsToS3Pipeline(FilesPipeline):
 
 class BasicBasketsPdfsIndexingPipeline:
     def process_item(self, item, spider):
-        connection_string = spider.connection_string
-        session = get_session(connection_string)
+        settings = spider.settings['DATABASE_SETTINGS']
+        session = get_session(**settings)
 
         for (file_url, file_path) in zip(item['file_urls'], item['file_paths']):
             file_hash = hashlib.sha1(to_bytes(file_url)).hexdigest()

@@ -4,6 +4,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Spider
 from food_products.items import BasicBasketsItem
+import pdb
 
 
 class BasicBasketsSpider(Spider):
@@ -16,14 +17,18 @@ class BasicBasketsSpider(Spider):
             'food_products.pipelines.BasicBasketsPdfsToS3Pipeline': 200,
             'food_products.pipelines.BasicBasketsPdfsIndexingPipeline': 300,
         },
+        'DATABASE_SETTINGS': {
+            'host': 'jumping-spiders.czko62ocualm.us-east-2.rds.amazonaws.com',
+            'port': 5432,
+            'username': 'postgres',
+            'password': '50F2AUiw5vvIMwkZX90a',
+            'database': 'food_products',
+        },
     }
 
-    def __init__(self, connection_string=None, *args, **kwargs):
-        super(BasicBasketsSpider, self).__init__(*args, **kwargs)
-        self.connection_string = connection_string
-
     def start_requests(self):
-        yield scrapy.Request(self.start_url)
+        start_urls = self.start_urls.split(',')
+        return [scrapy.Request(url) for url in start_urls]
 
     def parse(self, response):
         item = BasicBasketsItem()
