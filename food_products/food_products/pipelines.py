@@ -80,15 +80,17 @@ class BasicBasketsPdfsToCsvsPipeline:
         r'(n0|Resumen General Media y/o|Promedio Global|Precios|Mínimo|Precios|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
 
     def process_item(self, item, spider):
-        store = spider.settings['FILES_STORE']
+        fs_store = spider.settings['FILES_STORE']
         file_outputs = []
 
         for file_path, file_url in zip(item['file_paths'], item['file_urls']):
             spider.logger.info('Parsing: %s', file_path)
 
             file_output = self.pdf_to_csv(
-                '{}{}'.format(store, file_path), file_url)
-            file_outputs.append('{}{}'.format(store, file_output))
+                '{}{}'.format(fs_store, file_path),
+                file_url)
+
+            file_outputs.append(file_output)
 
         item['file_outputs'] = file_outputs
 
@@ -180,19 +182,24 @@ class BasicBasketsPdfsToCsvsPipeline:
 class BasicBasketsFilesUploadPipeline:
     def process_item(self, item, spider):
         client = boto3.client('s3')
-        store = spider.settings['FILES_STORE_S3']
-        bucket, prefix = store[5:].split('/', 1)
+
+        fs_store = spider.settings['FILES_STORE']
+        s3_store = spider.settings['FILES_STORE_S3']
+
+        bucket, prefix = s3_store[5:].split('/', 1)
 
         for file_path, file_output in zip(item['file_paths'], item['file_outputs']):
             spider.logger.info('Uploading: %s', file_path)
 
-            client.upload_file(file_path, bucket,
+            client.upload_file('{}{}'.format(fs_store, file_path),
+                               bucket,
                                '{}{}'.format(prefix, file_path))
 
             spider.logger.info('Uploading: %s', file_output)
 
-            client.upload_file(file_output, bucket,
-                               '{}{}'.format(prefix, file_output))
+            client.upload_file(file_output,
+                               bucket,
+                               '{}{}'.format(prefix, os.path.basename(file_output)))
 
         return item
 
