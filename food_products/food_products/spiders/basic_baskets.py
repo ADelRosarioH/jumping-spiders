@@ -11,11 +11,14 @@ class BasicBasketsSpider(Spider):
     name = 'basic_baskets'
 
     custom_settings = {
-        'FILES_STORE': 's3://jumping-spiders/food_products/basic_baskets/',
+        'FILES_STORE': '/tmp/',
+        'FILES_STORE_S3': 's3://jumping-spiders/food_products/basic_baskets/',
         'ITEM_PIPELINES': {
-            'food_products.pipelines.BasicBasketsAvoidPdfsDuplicatesPipeline': 100,
-            'food_products.pipelines.BasicBasketsPdfsToS3Pipeline': 200,
-            'food_products.pipelines.BasicBasketsPdfsIndexingPipeline': 300,
+            'food_products.pipelines.BasicBasketsDuplicatesFilterPipeline': 100,
+            'food_products.pipelines.BasicBasketsPdfsDownloadPipeline': 200,
+            'food_products.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
+            'food_products.pipelines.BasicBasketsFilesUploadPipeline': 400,
+            'food_products.pipelines.BasicBasketsPdfsIndexingPipeline': 500,
         },
         'DATABASE_SETTINGS': {
             'host': 'jumping-spiders.czko62ocualm.us-east-2.rds.amazonaws.com',
