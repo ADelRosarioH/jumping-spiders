@@ -3,7 +3,7 @@ import os
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Spider
-from food_products.items import BasicBasketsItem
+from jumping_spiders.items import BasicBasketsItem
 import pdb
 
 
@@ -12,20 +12,20 @@ class BasicBasketsSpider(Spider):
 
     custom_settings = {
         'FILES_STORE': '/tmp/',
-        'FILES_STORE_S3': 's3://jumping-spiders/food_products/basic_baskets/',
+        'FILES_STORE_S3': 's3://jumping-spiders/jumping_spiders/basic_baskets/',
         'ITEM_PIPELINES': {
-            'food_products.pipelines.BasicBasketsDuplicatesFilterPipeline': 100,
-            'food_products.pipelines.BasicBasketsPdfsDownloadPipeline': 200,
-            'food_products.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
-            'food_products.pipelines.BasicBasketsFilesUploadPipeline': 400,
-            'food_products.pipelines.BasicBasketsPdfsIndexingPipeline': 500,
+            'jumping_spiders.pipelines.BasicBasketsDuplicatesFilterPipeline': 100,
+            'jumping_spiders.pipelines.BasicBasketsPdfsDownloadPipeline': 200,
+            'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
+            'jumping_spiders.pipelines.BasicBasketsFilesUploadPipeline': 400,
+            'jumping_spiders.pipelines.BasicBasketsPdfsIndexingPipeline': 500,
         },
         'DATABASE_SETTINGS': {
             'host': 'jumping-spiders.czko62ocualm.us-east-2.rds.amazonaws.com',
             'port': 5432,
             'username': 'postgres',
             'password': '50F2AUiw5vvIMwkZX90a',
-            'database': 'food_products',
+            'database': 'jumping_spiders',
         },
     }
 
