@@ -23,29 +23,6 @@ from food_products.utils.database import get_session
 from food_products.utils.dates import get_date_range_form_url
 
 
-class BasicBasketsDuplicatesFilterPipeline:
-
-    def process_item(self, item, spider):
-        settings = spider.settings['DATABASE_SETTINGS']
-        session = get_session(**settings)
-
-        file_urls = []
-
-        for file_url in item['file_urls']:
-            file_hash = hashlib.sha1(to_bytes(file_url)).hexdigest()
-            result = session.execute(
-                """SELECT 1 FROM basic_baskets_indexing WHERE file_hash = :file_hash LIMIT 1""", {
-                    'file_hash': file_hash
-                }).scalar()
-
-            if not result:
-                file_urls.append(file_url)
-
-        item['file_urls'] = file_urls
-
-        return item
-
-
 class BasicBasketsPdfsDownloadPipeline(FilesPipeline):
 
     def file_path(self, request, response=None, info=None):
@@ -200,24 +177,5 @@ class BasicBasketsFilesUploadPipeline:
             client.upload_file(file_output,
                                bucket,
                                '{}{}'.format(prefix, os.path.basename(file_output)))
-
-        return item
-
-
-class BasicBasketsPdfsIndexingPipeline:
-    def process_item(self, item, spider):
-        settings = spider.settings['DATABASE_SETTINGS']
-        session = get_session(**settings)
-
-        for (file_url, file_path) in zip(item['file_urls'], item['file_paths']):
-            file_hash = os.path.splitext(os.path.basename(file_path))[0]
-
-            session.execute("""INSERT INTO basic_baskets_indexing (file_hash, file_url) 
-                VALUES (:file_hash, :file_url)""", {
-                'file_hash': file_hash,
-                'file_url': file_url,
-            })
-
-        session.commit()
 
         return item
