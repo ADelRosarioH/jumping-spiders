@@ -10,7 +10,7 @@ class DairyProductsSpider(scrapy.Spider):
     name = 'dairy_products'
 
     custom_settings = {
-        'FILES_STORE': '/tmp/',
+        'FILES_STORE': '/tmp/dairy_products/',
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.BasicBasketsPdfsDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
