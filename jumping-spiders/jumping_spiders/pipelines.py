@@ -54,7 +54,7 @@ class BasicBasketsPdfsDownloadPipeline(FilesPipeline):
 class BasicBasketsPdfsToCsvsPipeline:
 
     excluded_columns_regex = re.compile(
-        r'(n0|Resumen General Media y/o|Promedio Global|Precios|Mínimo|Precios|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
+        r'(CASA EDITORIAL|n0|Resumen General Media y/o|Promedio Global|Precios|Mínimo|Precios|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
 
     def process_item(self, item, spider):
         fs_store = spider.settings['FILES_STORE']
