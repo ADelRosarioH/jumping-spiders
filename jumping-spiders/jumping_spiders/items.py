@@ -18,3 +18,9 @@ class DairyProductsItem(scrapy.Item):
     file_urls = scrapy.Field()
     file_paths = scrapy.Field()
     file_outputs = scrapy.Field()
+
+
+class HardwareProductsItem(scrapy.Item):
+    file_urls = scrapy.Field()
+    file_paths = scrapy.Field()
+    file_outputs = scrapy.Field()
