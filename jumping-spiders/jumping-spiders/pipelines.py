@@ -155,27 +155,3 @@ class BasicBasketsPdfsToCsvsPipeline:
 
         return file_output
 
-
-class BasicBasketsFilesUploadPipeline:
-    def process_item(self, item, spider):
-        client = boto3.client('s3')
-
-        fs_store = spider.settings['FILES_STORE']
-        s3_store = spider.settings['FILES_STORE_S3']
-
-        bucket, prefix = s3_store[5:].split('/', 1)
-
-        for file_path, file_output in zip(item['file_paths'], item['file_outputs']):
-            spider.logger.info('Uploading: %s', file_path)
-
-            client.upload_file('{}{}'.format(fs_store, file_path),
-                               bucket,
-                               '{}{}'.format(prefix, file_path))
-
-            spider.logger.info('Uploading: %s', file_output)
-
-            client.upload_file(file_output,
-                               bucket,
-                               '{}{}'.format(prefix, os.path.basename(file_output)))
-
-        return item
