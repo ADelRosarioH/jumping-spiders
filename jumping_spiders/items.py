@@ -30,3 +30,16 @@ class TextBooksItem(scrapy.Item):
     file_urls = scrapy.Field()
     file_paths = scrapy.Field()
     file_outputs = scrapy.Field()
+
+
+class TransportationFeesItem(scrapy.Item):
+    province = scrapy.Field()
+    town = scrapy.Field()
+    route = scrapy.Field()
+    company = scrapy.Field()
+    phone_number = scrapy.Field()
+    representative = scrapy.Field()
+    stop = scrapy.Field()
+    line = scrapy.Field()
+    cost = scrapy.Field()
+    last_updated_at = scrapy.Field()
