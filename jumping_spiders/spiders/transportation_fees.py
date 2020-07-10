@@ -1,7 +1,6 @@
 import scrapy
 from scrapy.selector import Selector
 from jumping_spiders.items import TransportationFeesItem
-import pdb
 
 
 class TransportationFeesSpider(scrapy.Spider):
