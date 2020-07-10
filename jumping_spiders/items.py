@@ -43,3 +43,11 @@ class TransportationFeesItem(scrapy.Item):
     line = scrapy.Field()
     cost = scrapy.Field()
     last_updated_at = scrapy.Field()
+
+
+class FlowersItem(scrapy.Item):
+    store_name = scrapy.Field()
+    flower_type = scrapy.Field()
+    presentation = scrapy.Field()
+    price = scrapy.Field()
+    last_updated_at = scrapy.Field()
