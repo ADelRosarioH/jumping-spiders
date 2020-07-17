@@ -12,7 +12,7 @@ class TextBooksSpider(scrapy.Spider):
     custom_settings = {
         'FILES_STORE': '/tmp/text_books/',
         'ITEM_PIPELINES': {
-            'jumping_spiders.pipelines.BasicBasketsPdfsDownloadPipeline': 200,
+            'jumping_spiders.pipelines.PdfDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
         },
     }

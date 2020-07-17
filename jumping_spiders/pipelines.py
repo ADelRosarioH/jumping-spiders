@@ -23,7 +23,7 @@ from jumping_spiders.utils.database import get_session
 from jumping_spiders.utils.dates import get_date_range_form_url
 
 
-class BasicBasketsPdfsDownloadPipeline(FilesPipeline):
+class PdfDownloadPipeline(FilesPipeline):
 
     def file_path(self, request, response=None, info=None):
         media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
