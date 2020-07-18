@@ -51,3 +51,9 @@ class FlowersItem(scrapy.Item):
     presentation = scrapy.Field()
     price = scrapy.Field()
     last_updated_at = scrapy.Field()
+
+
+class MedicinesItem(scrapy.Item):
+    file_urls = scrapy.Field()
+    file_paths = scrapy.Field()
+    file_outputs = scrapy.Field()
