@@ -10,7 +10,7 @@ class HardwareProductsSpider(scrapy.Spider):
     name = 'hardware_products'
 
     custom_settings = {
-        'FILES_STORE': '/tmp/hardware_products',
+        'FILES_STORE': '/jumping-spiders/hardware_products',
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,

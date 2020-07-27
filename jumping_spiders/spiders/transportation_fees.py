@@ -8,7 +8,7 @@ class TransportationFeesSpider(scrapy.Spider):
 
     custom_settings = {
         'FEEDS': {
-            '/tmp/transportation_fees/export.csv': {
+            '/jumping-spiders/transportation_fees/export.csv': {
                 'format': 'csv',
                 'fields': [
                     'province',

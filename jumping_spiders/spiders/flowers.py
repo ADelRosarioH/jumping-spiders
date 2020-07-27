@@ -8,7 +8,7 @@ class FlowersSpider(scrapy.Spider):
 
     custom_settings = {
         'FEEDS': {
-            '/tmp/flowers/export.csv': {
+            '/jumping-spiders/flowers/export.csv': {
                 'format': 'csv',
                 'fields': [
                     'store_name',
