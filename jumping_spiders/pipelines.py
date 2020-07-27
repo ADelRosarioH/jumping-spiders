@@ -25,12 +25,10 @@ from jumping_spiders.utils.dates import get_date_range_form_url
 
 class FileDownloadPipeline(FilesPipeline):
 
-    def open_spider(self, spider):
-        self.fs_store = spider.settings['FILES_STORE']
-
     def file_path(self, request, response=None, info=None):
         media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
-        media_ext = os.path.splitext(request.url)[1]
+        media_path, media_ext = os.path.splitext(request.url)
+        media_name = os.path.basename(media_path)
         # Handles empty and wild extensions by trying to guess the
         # mime type then extension or default to empty string otherwise
         if media_ext not in mimetypes.types_map:
@@ -39,17 +37,20 @@ class FileDownloadPipeline(FilesPipeline):
             if media_type:
                 media_ext = mimetypes.guess_extension(media_type)
 
-        media_path = '{}{}'.format(media_guid, media_ext)
+        media_path = '{}{}'.format(media_name, media_ext)
         return media_path
 
     def get_media_requests(self, item, info):
+        fs_store = info.spider.settings['FILES_STORE']
+
         for file_url in item['file_urls']:
             media_guid = hashlib.sha1(to_bytes(file_url)).hexdigest()
-            media_ext = os.path.splitext(file_url)[1]
-            future_file_path = os.path.join(
-                self.fs_store, media_guid, media_ext)
+            media_path, media_ext = os.path.splitext(file_url)
+            media_name = os.path.basename(media_path)
 
-            if not os.path.exists(future_file_path):
+            local_file_path = os.path.join(fs_store, media_name, media_ext)
+
+            if not os.path.exists(local_file_path):
                 yield scrapy.Request(file_url)
 
     def item_completed(self, results, item, info):
