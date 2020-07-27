@@ -23,7 +23,10 @@ from jumping_spiders.utils.database import get_session
 from jumping_spiders.utils.dates import get_date_range_form_url
 
 
-class PdfDownloadPipeline(FilesPipeline):
+class FileDownloadPipeline(FilesPipeline):
+
+    def open_spider(self, spider):
+        self.fs_store = spider.settings['FILES_STORE']
 
     def file_path(self, request, response=None, info=None):
         media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
@@ -41,7 +44,13 @@ class PdfDownloadPipeline(FilesPipeline):
 
     def get_media_requests(self, item, info):
         for file_url in item['file_urls']:
-            yield scrapy.Request(file_url)
+            media_guid = hashlib.sha1(to_bytes(file_url)).hexdigest()
+            media_ext = os.path.splitext(file_url)[1]
+            future_file_path = os.path.join(
+                self.fs_store, media_guid, media_ext)
+
+            if not os.path.exists(future_file_path):
+                yield scrapy.Request(file_url)
 
     def item_completed(self, results, item, info):
         file_paths = [x['path'] for ok, x in results if ok]
