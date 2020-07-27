@@ -13,7 +13,7 @@ class BasicBasketsSpider(Spider):
     custom_settings = {
         'FILES_STORE': '/tmp/basic_baskets/',
         'ITEM_PIPELINES': {
-            'jumping_spiders.pipelines.PdfDownloadPipeline': 200,
+            'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
         },
     }

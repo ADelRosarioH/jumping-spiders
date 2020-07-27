@@ -13,7 +13,7 @@ class MedicinesSpider(Spider):
     custom_settings = {
         'FILES_STORE': '/tmp/medicines/',
         'ITEM_PIPELINES': {
-            'jumping_spiders.pipelines.PdfDownloadPipeline': 200,
+            'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.MedicinesPdfsToCsvsPipeline': 300,
         },
     }
