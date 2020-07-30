@@ -4,7 +4,6 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Spider
 from jumping_spiders.items import BasicBasketsItem
-import pdb
 
 
 class BasicBasketsSpider(Spider):
@@ -20,7 +19,7 @@ class BasicBasketsSpider(Spider):
 
     def start_requests(self):
         start_urls = [
-            'proconsumidor.gob.do/consulta-de-precios-de-medicamentos-2017/'
+            'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2017/'
         ]
         return [scrapy.Request(url) for url in start_urls]
 
