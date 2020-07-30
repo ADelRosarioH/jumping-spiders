@@ -23,7 +23,9 @@ class FlowersSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        start_urls = self.start_urls.split(',')
+        start_urls = [
+            'http://proconsumidor.gob.do/precios-de-flores.php'
+        ]
         return [scrapy.Request(url) for url in start_urls]
 
     def parse(self, response):

@@ -28,7 +28,9 @@ class TransportationFeesSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        start_urls = self.start_urls.split(',')
+        start_urls = [
+            'https://proconsumidor.gob.do/precio-de-pasajes-autobus.php'
+        ]
         return [scrapy.Request(url) for url in start_urls]
 
     def parse(self, response):

@@ -19,7 +19,9 @@ class BasicBasketsSpider(Spider):
     }
 
     def start_requests(self):
-        start_urls = self.start_urls.split(',')
+        start_urls = [
+            'proconsumidor.gob.do/consulta-de-precios-de-medicamentos-2017/'
+        ]
         return [scrapy.Request(url) for url in start_urls]
 
     def parse(self, response):

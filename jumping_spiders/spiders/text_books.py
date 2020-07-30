@@ -18,7 +18,9 @@ class TextBooksSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        start_urls = self.start_urls.split(',')
+        start_urls = [
+            'https://proconsumidor.gob.do/monitoreo-de-libros-de-textos/'
+        ]
         return [scrapy.Request(url) for url in start_urls]
 
     def parse(self, response):
