@@ -19,7 +19,10 @@ class DairyProductsSpider(scrapy.Spider):
 
     def start_requests(self):
         start_urls = [
-            'https://proconsumidor.gob.do/monitoreos-diferentes-tipos-de-leches-2017/'
+            # 'https://proconsumidor.gob.do/monitoreos-diferentes-tipos-de-leches-2017/',
+            # 'https://proconsumidor.gob.do/monitoreos-diferentes-tipos-de-leches-2018/',
+            # 'https://proconsumidor.gob.do/monitoreos-diferentes-tipos-de-leches-2019/',
+            'https://proconsumidor.gob.do/monitoreos-diferentes-tipos-de-leches-2020/'
         ]
         return [scrapy.Request(url) for url in start_urls]
 

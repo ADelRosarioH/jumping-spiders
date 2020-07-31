@@ -20,7 +20,10 @@ class MedicinesSpider(Spider):
 
     def start_requests(self):
         start_urls = [
-            'https://proconsumidor.gob.do/monitoreos-farmacias-2017/'
+            # 'https://proconsumidor.gob.do/monitoreos-farmacias-2017/',
+            # 'https://proconsumidor.gob.do/consulta-de-precios-de-medicamentos-2018/',
+            # 'https://proconsumidor.gob.do/consulta-de-precios-de-medicamentos-2019/',
+            'https://proconsumidor.gob.do/consulta-de-precios-de-medicamentos-2020/',
         ]
         return [scrapy.Request(url) for url in start_urls]
 

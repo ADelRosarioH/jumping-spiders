@@ -10,7 +10,7 @@ class HardwareProductsSpider(scrapy.Spider):
     name = 'hardware_products'
 
     custom_settings = {
-        'FILES_STORE': '/jumping-spiders/hardware_products',
+        'FILES_STORE': '/jumping-spiders/hardware_products/',
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,
@@ -19,7 +19,11 @@ class HardwareProductsSpider(scrapy.Spider):
 
     def start_requests(self):
         start_urls = [
-            'https://proconsumidor.gob.do/monitoreo-de-ferreterias-2017/'
+            # 'https://proconsumidor.gob.do/monitoreo-de-ferreterias-2017/',
+            # 'https://proconsumidor.gob.do/monitoreo-de-ferreterias-2018/',
+            # 'https://proconsumidor.gob.do/monitoreos-de-ferreterias-2019/',
+            'https://proconsumidor.gob.do/monitoreos-de-ferreterias-2020/'
+
         ]
         return [scrapy.Request(url) for url in start_urls]
 

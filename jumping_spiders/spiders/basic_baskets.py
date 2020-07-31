@@ -19,7 +19,10 @@ class BasicBasketsSpider(Spider):
 
     def start_requests(self):
         start_urls = [
-            'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2017/'
+            # 'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2017/',
+            # 'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2018/',
+            # 'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2019/',
+            'https://proconsumidor.gob.do/sondeos-de-canasta-basica-2020/'
         ]
         return [scrapy.Request(url) for url in start_urls]
 
