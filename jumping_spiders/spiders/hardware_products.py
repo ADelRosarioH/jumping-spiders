@@ -22,8 +22,7 @@ class HardwareProductsSpider(scrapy.Spider):
             # 'https://proconsumidor.gob.do/monitoreo-de-ferreterias-2017/',
             # 'https://proconsumidor.gob.do/monitoreo-de-ferreterias-2018/',
             # 'https://proconsumidor.gob.do/monitoreos-de-ferreterias-2019/',
-            'https://proconsumidor.gob.do/monitoreos-de-ferreterias-2020/'
-
+            'https://proconsumidor.gob.do/monitoreos-de-ferreterias-2020/',
         ]
         return [scrapy.Request(url) for url in start_urls]
 

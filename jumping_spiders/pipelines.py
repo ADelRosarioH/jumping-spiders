@@ -22,7 +22,6 @@ from urllib.parse import urlparse
 from jumping_spiders.utils.database import get_session
 from jumping_spiders.utils.dates import get_date_range_form_url
 
-
 class FileDownloadPipeline(FilesPipeline):
 
     def file_path(self, request, response=None, info=None):
@@ -102,6 +101,9 @@ class BasicBasketsPdfsToCsvsPipeline:
                 # pdf can have fixed headers and this messes up with
                 # the implementation.
                 tables = page.extract_tables()
+                # in case of hardware products, last page find a table with no cells
+                if len(tables) <= 0:
+                    continue
 
                 # pdfplumber cloud return multiple tables for the same
                 # table instance in the pdf
@@ -109,14 +111,20 @@ class BasicBasketsPdfsToCsvsPipeline:
                                 for table in tables], axis=1)
 
                 # export and read csv to merge header rows.
+                df = df.replace('\n', '', regex=True)
+                df.fillna('--', inplace=True)
+
+                if len(df.index) < 3:
+                    continue
+
                 output = StringIO(df.to_csv(header=False, index=False))
                 df = pd.read_csv(output, header=[0, 1, 2])
+                
                 df.columns = df.columns.map(lambda h: '{} {} {}'.format(
                     h[0], h[1], h[2]).replace('\n', '|'))
 
                 df.rename_axis('id')
-                df.fillna(' ', inplace=True)
-
+                
                 # excludes irrelevant columns
                 excluded_columns = [df.columns.get_loc(
                     c) for c in df.columns if self.excluded_columns_regex.search(c)]
@@ -128,6 +136,9 @@ class BasicBasketsPdfsToCsvsPipeline:
 
                 # read pivoted (product x vendor) data
                 for index, row in df.iterrows():
+                    if len(row) < 2:
+                        continue
+
                     description = str(row[0]).strip()
                     unit = str(row[1]).strip()
 
@@ -171,9 +182,11 @@ class MedicinesPdfsToCsvsPipeline:
     excluded_columns_regex = re.compile(
         r'(n0|no|Orden|Resumen|General|Media|Promedio|Global|Precios|Mínimo|Precios|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
 
-    generic_columns_regex = re.compile(r'Genérico|Principio|Activo', re.I)
+    generic_columns_regex = re.compile(r'Genérico|Principio|Activo|Concentrac', re.I)
 
-    commercial_columns_regex = re.compile(r'Marca', re.I)
+    commercial_columns_regex = re.compile(r'Marca|Concentrac', re.I)
+
+    clean_columns_regex = re.compile(r'Genérico|Principio|Activo')
 
     def process_item(self, item, spider):
         fs_store = spider.settings['FILES_STORE']
@@ -242,10 +255,10 @@ class MedicinesPdfsToCsvsPipeline:
                 # df = df.dropna(how='all', axis=1)
 
                 generic_columns = [df.columns.get_loc(
-                    c) for c in df.columns if self.generic_columns_regex.search(c) and not self.commercial_columns_regex.search(c)]
+                    c) for c in df.columns if self.generic_columns_regex.search(c)]
 
                 commercial_columns = [df.columns.get_loc(
-                    c) for c in df.columns if self.commercial_columns_regex.search(c) and not self.generic_columns_regex.search(c)]
+                    c) for c in df.columns if self.commercial_columns_regex.search(c)]
 
                 if (len(generic_columns) > 1 and len(commercial_columns) > 1):
                     generic_df = df.copy()
@@ -253,7 +266,7 @@ class MedicinesPdfsToCsvsPipeline:
                         generic_df.columns[commercial_columns], axis=1, inplace=True)
 
                     cleaned_columns = [
-                        re.sub(generic_columns_regex, '', c) for c in generic_df.columns]
+                        re.sub(self.clean_columns_regex, '', c) for c in generic_df.columns]
 
                     generic_df.columns = cleaned_columns
 
@@ -264,7 +277,7 @@ class MedicinesPdfsToCsvsPipeline:
                     commercial_df = df.copy()
                     commercial_df.drop(
                         commercial_df.columns[generic_columns], axis=1, inplace=True)
-
+                    
                     commercial_df.columns = cleaned_columns
 
                     commercial_report_page = self.parse_report(

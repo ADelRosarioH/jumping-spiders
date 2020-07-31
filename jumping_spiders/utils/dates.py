@@ -56,6 +56,7 @@ def _get_parsed_month(month):
 
 
 def get_date_range_form_url(url):
-    url = urllib.parse.unquote(url)
+    unquote = urllib.parse.unquote
+    url = unquote(unquote(url))
     filename = os.path.basename(url)
     return [get_from_date(filename), get_to_date(filename)]
