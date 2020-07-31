@@ -180,7 +180,7 @@ class BasicBasketsPdfsToCsvsPipeline:
 class MedicinesPdfsToCsvsPipeline:
 
     excluded_columns_regex = re.compile(
-        r'(n0|no|Orden|Resumen|General|Media|Promedio|Global|Precios|Mínimo|Precios|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
+        r'(n0|no|Orden|Resumen|General|Media|Promedio|Global|Mínimo|Máximo|Moda|Mediana|Desviación|Estándar)', re.I)
 
     generic_columns_regex = re.compile(r'Genérico|Principio|Activo|Concentrac', re.I)
 
@@ -278,7 +278,8 @@ class MedicinesPdfsToCsvsPipeline:
                     commercial_df.drop(
                         commercial_df.columns[generic_columns], axis=1, inplace=True)
                     
-                    commercial_df.columns = cleaned_columns
+                    if (len(commercial_df.columns) == len(cleaned_columns)):
+                        commercial_df.columns = cleaned_columns
 
                     commercial_report_page = self.parse_report(
                         commercial_df, name, start_date, end_date)
