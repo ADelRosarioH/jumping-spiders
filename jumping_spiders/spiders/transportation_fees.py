@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.selector import Selector
 from jumping_spiders.items import TransportationFeesItem
+from datetime import date
 
 
 class TransportationFeesSpider(scrapy.Spider):
@@ -21,6 +22,7 @@ class TransportationFeesSpider(scrapy.Spider):
                     'line',
                     'cost',
                     'last_updated_at',
+                    'created_at',
                 ],
                 'encoding': 'utf-8',
             },
@@ -59,5 +61,6 @@ class TransportationFeesSpider(scrapy.Spider):
             item['line'] = get_text(tds[7])
             item['cost'] = get_text(tds[8])
             item['last_updated_at'] = last_updated_at
+            item['created_at'] = date.today()
 
             yield item

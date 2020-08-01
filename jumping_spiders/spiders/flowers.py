@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.selector import Selector
 from jumping_spiders.items import FlowersItem
+from datetime import date
 
 
 class FlowersSpider(scrapy.Spider):
@@ -16,6 +17,7 @@ class FlowersSpider(scrapy.Spider):
                     'presentation',
                     'price',
                     'last_updated_at',
+                    'created_at',
                 ],
                 'encoding': 'utf-8',
             },
@@ -49,5 +51,6 @@ class FlowersSpider(scrapy.Spider):
             item['presentation'] = get_text(tds[2])
             item['price'] = get_text(tds[3])
             item['last_updated_at'] = last_updated_at
+            item['created_at'] = date.today()
 
             yield item
