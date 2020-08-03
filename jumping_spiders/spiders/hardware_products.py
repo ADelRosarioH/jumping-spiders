@@ -3,14 +3,13 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Spider
 from jumping_spiders.items import HardwareProductsItem
-import pdb
-
+from pathlib import Path
 
 class HardwareProductsSpider(scrapy.Spider):
     name = 'hardware_products'
 
     custom_settings = {
-        'FILES_STORE': '/jumping-spiders/hardware_products/',
+        'FILES_STORE': Path.home().joinpath('jumping-spiders/hardware_products/'),
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,

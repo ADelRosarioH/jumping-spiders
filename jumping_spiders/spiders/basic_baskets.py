@@ -4,13 +4,13 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Spider
 from jumping_spiders.items import BasicBasketsItem
-
+from pathlib import Path
 
 class BasicBasketsSpider(Spider):
     name = 'basic_baskets'
 
     custom_settings = {
-        'FILES_STORE': '/jumping-spiders/basic_baskets/',
+        'FILES_STORE': Path.home().joinpath('jumping-spiders/basic_baskets/'),
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,

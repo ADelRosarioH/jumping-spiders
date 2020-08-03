@@ -2,14 +2,14 @@ import scrapy
 from scrapy.selector import Selector
 from jumping_spiders.items import FlowersItem
 from datetime import date
-
+from pathlib import Path
 
 class FlowersSpider(scrapy.Spider):
     name = 'flowers'
 
     custom_settings = {
         'FEEDS': {
-            '/jumping-spiders/flowers/%(name)s-%(time)s.csv': {
+            Path.home().joinpath('jumping-spiders/flowers/%(name)s-%(time)s.csv'): {
                 'format': 'csv',
                 'fields': [
                     'description',

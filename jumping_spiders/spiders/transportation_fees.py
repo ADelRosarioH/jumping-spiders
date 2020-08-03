@@ -2,14 +2,14 @@ import scrapy
 from scrapy.selector import Selector
 from jumping_spiders.items import TransportationFeesItem
 from datetime import date
-
+from pathlib import Path
 
 class TransportationFeesSpider(scrapy.Spider):
     name = 'transportation_fees'
 
     custom_settings = {
         'FEEDS': {
-            '/jumping-spiders/transportation_fees/%(name)s-%(time)s.csv': {
+            Path.home().joinpath('jumping-spiders/transportation_fees/%(name)s-%(time)s.csv'): {
                 'format': 'csv',
                 'fields': [
                     'province',
