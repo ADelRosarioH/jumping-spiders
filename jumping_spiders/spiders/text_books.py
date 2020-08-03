@@ -9,7 +9,7 @@ class TextBooksSpider(scrapy.Spider):
     name = 'text_books'
 
     custom_settings = {
-        'FILES_STORE': Path.home().joinpath('jumping-spiders/text_books/'),
+        'FILES_STORE': str(Path.home().joinpath('jumping-spiders/text_books/')),
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,

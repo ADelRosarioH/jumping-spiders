@@ -25,7 +25,7 @@ from jumping_spiders.utils.dates import get_date_range_form_url
 class FileDownloadPipeline(FilesPipeline):
 
     def file_path(self, request, response=None, info=None):
-        media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
+        # media_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
         media_path, media_ext = os.path.splitext(request.url)
         media_name = os.path.basename(media_path)
         # Handles empty and wild extensions by trying to guess the
@@ -43,12 +43,12 @@ class FileDownloadPipeline(FilesPipeline):
         fs_store = info.spider.settings['FILES_STORE']
 
         for file_url in item['file_urls']:
-            media_guid = hashlib.sha1(to_bytes(file_url)).hexdigest()
+            # media_guid = hashlib.sha1(to_bytes(file_url)).hexdigest()
             media_path, media_ext = os.path.splitext(file_url)
             media_name = os.path.basename(media_path)
 
             local_file_path = os.path.join(fs_store, media_name, media_ext)
-
+            
             if not os.path.exists(local_file_path):
                 yield scrapy.Request(file_url)
 
@@ -73,7 +73,7 @@ class BasicBasketsPdfsToCsvsPipeline:
             spider.logger.info('Parsing: %s', file_path)
 
             file_output = self.pdf_to_csv(
-                '{}{}'.format(fs_store, file_path),
+                os.path.join(fs_store, file_path),
                 file_url)
 
             file_outputs.append(file_output)
@@ -196,7 +196,7 @@ class MedicinesPdfsToCsvsPipeline:
             spider.logger.info('Parsing: %s', file_path)
 
             file_output = self.pdf_to_csv(
-                '{}{}'.format(fs_store, file_path),
+                os.path.join(fs_store, file_path),
                 file_url)
 
             file_outputs.append(file_output)
