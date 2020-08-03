@@ -12,12 +12,13 @@ class FlowersSpider(scrapy.Spider):
             '/jumping-spiders/flowers/%(name)s-%(time)s.csv': {
                 'format': 'csv',
                 'fields': [
-                    'store_name',
-                    'flower_type',
-                    'presentation',
+                    'description',
+                    'unit',
+                    'vendor',
                     'price',
+                    'currency',
+                    'last_published_at',
                     'last_updated_at',
-                    'created_at',
                 ],
                 'encoding': 'utf-8',
             },
@@ -46,11 +47,11 @@ class FlowersSpider(scrapy.Spider):
         for tr in response.css('div#productos div.impre center table.table-striped tr').getall():
             tds = Selector(text=tr).css('td').getall()
 
-            item['store_name'] = get_text(tds[0])
-            item['flower_type'] = get_text(tds[1])
-            item['presentation'] = get_text(tds[2])
+            item['vendor'] = get_text(tds[0])
+            item['description'] = get_text(tds[1])
+            item['unit'] = get_text(tds[2])
             item['price'] = get_text(tds[3])
-            item['last_updated_at'] = last_updated_at
-            item['created_at'] = date.today()
+            item['last_published_at'] = last_updated_at
+            item['last_updated_at'] = date.today()
 
             yield item
