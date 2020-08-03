@@ -54,7 +54,8 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'random_useragent.RandomUserAgentMiddleware': 400
+    'random_useragent.RandomUserAgentMiddleware': 400,
+    'proxy_middleware.ProxyFromSettingsMiddleware': 10,
 }
 
 # Enable or disable extensions
@@ -91,3 +92,6 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 USER_AGENT_LIST = 'user-agents.txt'
+
+HTTP_PROXY = 'http://localhost:8118'
+HTTPS_PROXY = 'http://localhost:8118'
