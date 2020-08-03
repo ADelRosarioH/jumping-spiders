@@ -21,6 +21,7 @@ class TransportationFeesSpider(scrapy.Spider):
                     'stop',
                     'line',
                     'cost',
+                    'currency',
                     'last_published_at',
                     'last_updated_at',
                 ],
@@ -60,6 +61,7 @@ class TransportationFeesSpider(scrapy.Spider):
             item['stop'] = get_text(tds[6])
             item['line'] = get_text(tds[7])
             item['cost'] = get_text(tds[8])
+            item['currency'] = 'DOP'
             item['last_published_at'] = last_updated_at
             item['last_updated_at'] = date.today()
 

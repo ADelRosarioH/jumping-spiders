@@ -51,6 +51,7 @@ class FlowersItem(scrapy.Item):
     description = scrapy.Field()
     unit = scrapy.Field()
     price = scrapy.Field()
+    currency = scrapy.Field()
     last_updated_at = scrapy.Field()
     last_published_at = scrapy.Field()
     

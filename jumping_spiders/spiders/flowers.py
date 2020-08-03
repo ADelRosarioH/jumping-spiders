@@ -51,6 +51,7 @@ class FlowersSpider(scrapy.Spider):
             item['description'] = get_text(tds[1])
             item['unit'] = get_text(tds[2])
             item['price'] = get_text(tds[3])
+            item['currency'] = 'DOP'
             item['last_published_at'] = last_updated_at
             item['last_updated_at'] = date.today()
 
