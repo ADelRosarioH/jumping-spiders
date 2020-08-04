@@ -210,9 +210,9 @@ class MedicinesPdfsToCsvsPipeline:
         name = os.path.basename(path)
 
         file_output = '{}{}'.format(path, '.csv')
-        generic_file_output = '{}-{}{}'.format(path, 'generic', ext)
-        commercial_file_output = '{}-{}{}'.format(path, 'commercial', ext)
-
+        generic_file_output = '{}-{}{}'.format(path, 'generic', '.csv')
+        commercial_file_output = '{}-{}{}'.format(path, 'commercial', '.csv')
+        
         if os.path.exists(file_output):
             return file_output
 
@@ -293,15 +293,15 @@ class MedicinesPdfsToCsvsPipeline:
 
             pdf.close()
 
-        if (len(generic_report_pages) > 1):
+        if (len(generic_report_pages) >= 1):
             pd.concat(generic_report_pages).to_csv(
                 generic_file_output, index=False)
 
-        if (len(commercial_report_pages) > 1):
+        if (len(commercial_report_pages) >= 1):
             pd.concat(commercial_report_pages).to_csv(
                 commercial_file_output, index=False)
 
-        if (len(single_report_pages) > 1):
+        if (len(single_report_pages) >= 1):
             pd.concat(single_report_pages).to_csv(file_output, index=False)
 
         return file_output
@@ -313,10 +313,10 @@ class MedicinesPdfsToCsvsPipeline:
 
         # read pivoted (product x vendor) data
         for index, row in df.iterrows():
-            medication_name = str(row[0]).strip()
-            dosage = str(row[1]).strip()
-            maker = str(row[2]).strip()
-            unit = str(row[3]).strip()
+            medication_name = None if len(row) <= 1 else str(row[0]).strip()
+            dosage = None if len(row) <= 2 else str(row[1]).strip()
+            maker = None if len(row) <= 3 else str(row[2]).strip()
+            unit = None if len(row) <= 4 else str(row[3]).strip()
 
             if (not medication_name and not dosage and not maker and not unit):
                 continue
