@@ -11,15 +11,13 @@ import mimetypes
 import re
 import uuid
 import pdfplumber
-import boto3
 import pandas as pd
 from io import StringIO
 from price_parser import Price
 from scrapy.pipelines.files import FilesPipeline
-from scrapy.exceptions import DropItem, NotConfigured
+from scrapy.exceptions import DropItem
 from scrapy.utils.python import to_bytes
 from urllib.parse import urlparse
-from jumping_spiders.utils.database import get_session
 from jumping_spiders.utils.dates import get_date_range_form_url
 
 class FileDownloadPipeline(FilesPipeline):
