@@ -91,7 +91,7 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-USER_AGENT_LIST = 'user-agents.txt'
+USER_AGENT_LIST = 'jumping_spiders/user-agents.txt'
 
 HTTP_PROXY = 'http://localhost:8118'
 HTTPS_PROXY = 'http://localhost:8118'
