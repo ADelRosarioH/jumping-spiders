@@ -5,4 +5,3 @@ Scrapy
 dateparser
 price_parser
 proxy-middleware
-scrapy-random-useragent

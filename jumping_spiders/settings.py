@@ -54,7 +54,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'random_useragent.RandomUserAgentMiddleware': 400,
+    'jumping_spiders.middlewares.RandomUserAgentMiddleware': 400,
     'proxy_middleware.ProxyFromSettingsMiddleware': 10,
 }
 
