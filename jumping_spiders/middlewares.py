@@ -1,4 +1,4 @@
-import pkgutil
+from pkg_resources import resource_string as load
 import random
 from scrapy import signals
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
@@ -20,7 +20,8 @@ class RandomUserAgentMiddleware(UserAgentMiddleware):
                 with open(user_agent_list_file, 'r') as f:
                     self.user_agent_list = [line.strip() for line in f.readlines()]
             except:
-                self.user_agent_list = [line.strip() for line in pkgutil.get_data('', user_agent_list_file)]
+                user_agents = load('jumping_spiders', user_agent_list_file)
+                self.user_agent_list = [line.strip() for line in user_agents.splitlines()]
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -31,5 +32,6 @@ class RandomUserAgentMiddleware(UserAgentMiddleware):
 
     def process_request(self, request, spider):
         user_agent = random.choice(self.user_agent_list)
+        spider.logger.debug('User-Agent: %s', user_agent)
         if user_agent:
             request.headers.setdefault('User-Agent', user_agent)
