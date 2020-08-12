@@ -9,7 +9,7 @@ class FlowersSpider(scrapy.Spider):
 
     custom_settings = {
         'FEEDS': {
-            Path.home().joinpath('jumping-spiders/flowers/%(name)s-%(time)s.csv'): {
+            '/jumping-spiders/flowers/%(name)s-%(time)s.csv': {
                 'format': 'csv',
                 'fields': [
                     'description',

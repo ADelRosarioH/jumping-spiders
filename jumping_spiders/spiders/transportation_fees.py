@@ -9,7 +9,7 @@ class TransportationFeesSpider(scrapy.Spider):
 
     custom_settings = {
         'FEEDS': {
-            Path.home().joinpath('jumping-spiders/transportation_fees/%(name)s-%(time)s.csv'): {
+            '/jumping-spiders/transportation_fees/%(name)s-%(time)s.csv': {
                 'format': 'csv',
                 'fields': [
                     'province',

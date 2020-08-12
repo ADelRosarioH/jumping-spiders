@@ -10,7 +10,7 @@ class BasicBasketsSpider(Spider):
     name = 'basic_baskets'
 
     custom_settings = {
-        'FILES_STORE': str(Path.home().joinpath('jumping-spiders/basic_baskets/')),
+        'FILES_STORE': '/jumping-spiders/basic_baskets/',
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.BasicBasketsPdfsToCsvsPipeline': 300,

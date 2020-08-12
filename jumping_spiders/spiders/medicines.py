@@ -10,7 +10,7 @@ class MedicinesSpider(Spider):
     name = 'medicines'
 
     custom_settings = {
-        'FILES_STORE': str(Path.home().joinpath('jumping-spiders/medicines/')),
+        'FILES_STORE': '/jumping-spiders/medicines/',
         'ITEM_PIPELINES': {
             'jumping_spiders.pipelines.FileDownloadPipeline': 200,
             'jumping_spiders.pipelines.MedicinesPdfsToCsvsPipeline': 300,
