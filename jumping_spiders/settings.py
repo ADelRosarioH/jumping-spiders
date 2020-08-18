@@ -91,7 +91,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 0.5
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-USER_AGENT_LIST = 'user-agents.txt'
+USER_AGENT_LIST = 'data/user-agents.txt'
 
 HTTP_PROXY = 'http://localhost:8118'
 HTTPS_PROXY = 'http://localhost:8118'
