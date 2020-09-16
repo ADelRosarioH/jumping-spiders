@@ -17,7 +17,7 @@ I can't be able to concentrate in what's next, because of thinking of what is do
 - Data wrangling is done using crontab + bash + Openrefine
 - Unprocessed files are going to be stored in AWS S3 as backup
 - Processed files are going to be stored in AWS S3 as backup
-- Processed files are going to be stored in postgresql by spider 
+- Processed files are going to be stored in postgresql by script 
 
 ## stuff that I need to figure out
 - Where to analyze the data, python vs sql
@@ -35,8 +35,8 @@ I can't be able to concentrate in what's next, because of thinking of what is do
 - feed is sync daily to openrefine input directory
 - openrefine cleans up the files in input directory applying operations
 - openrefine exports cleaned files to output directory
-- bash script uploads unprocessed files from input directory to AWS S3 and then removes then from input directory
-- bash script uploads processed files from output directory to AWS S3 and the removes then from output directory
+- bash script uploads unprocessed files from input directory to AWS S3 and then removes them from input directory
+- bash script uploads processed files from output directory to AWS S3 and then removes them from output directory
 - bash script loads data to database
 
 # File cleanup retry
